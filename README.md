@@ -27,6 +27,10 @@ git clone https://github.com/Michael-Otieno/django-api/
   ```bash
 pip install -r requirements.txt 
  ```
+ - Run project
+  ```bash
+python3 manage.py runserver
+ ```
  ## Structure
  | Endpoint | HTTP Method   | CRUD Method  | Result |
 | :---:   | :---: | :---: |:---: |
