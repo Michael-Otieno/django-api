@@ -8,8 +8,8 @@ urlpatterns = [
     path('login/', LoginView.as_view()),
     path('user/', UserView.as_view()),
     path('logout/', LogoutView.as_view()),
-    path('land-information/', LandOwnerInformationView.as_view()),
-    path('land-information/<int:pk>/', LandOwnerDetailInfoView.as_view()),
+    path('land-owner-information/', LandOwnerInformationView.as_view()),
+    path('land-owner-information/<int:pk>/', LandOwnerDetailInfoView.as_view()),
     path('land-detail/', LandInfoView.as_view()),
     path('land-detail/<int:pk>/', LandInfoDetailView.as_view()),
 
