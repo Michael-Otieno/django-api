@@ -10,7 +10,8 @@ from .serializers import LandInformationSerializer,LandOwnerSerializer
 from rest_framework import status
 from django.http import Http404
 
-
+from rest_framework.generics import GenericAPIView 
+from rest_framework import generics
 # Create your views here.
 
 
@@ -29,14 +30,16 @@ def getRoutes(request):
     }
     return Response(routes)
 
-class RegisterView(APIView):
+class RegisterView(generics.GenericAPIView):
+  serializer_class = UserSerializer
   def post(self,request):
     serializer = UserSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     serializer.save()
     return Response(serializer.data)
 
-class LoginView(APIView):
+class LoginView(generics.GenericAPIView):
+  serializer_class = UserSerializer
   def post(self,request):
     email = request.data['email']
     password = request.data['password']
@@ -64,7 +67,9 @@ class LoginView(APIView):
 
     return response
     
-class UserView(APIView):
+class UserView(generics.GenericAPIView):
+  serializer_class = UserSerializer
+
   def get(self,request):
     token = request.COOKIES.get('jwt')
 
@@ -81,7 +86,8 @@ class UserView(APIView):
 
     return Response(serializer.data)
 
-class LogoutView(APIView):
+class LogoutView(generics.GenericAPIView):
+  serializer_class = UserSerializer
   def post(self,request):
     response = Response()
     response.delete_cookie('jwt')
@@ -90,7 +96,8 @@ class LogoutView(APIView):
     }
     return response
 
-class LandInfoView(APIView):
+class LandInfoView(generics.GenericAPIView):
+  serializer_class = LandInformationSerializer
   def get(self,request,format=None):
     landInfo = LandInformation.objects.all()
     serializer = LandInformationSerializer(landInfo,many=True)
@@ -103,7 +110,9 @@ class LandInfoView(APIView):
       return Response(serializer.data,status=status.HTTP_201_CREATED)
     return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-class LandInfoDetailView(APIView):
+class LandInfoDetailView(generics.GenericAPIView):
+  serializer_class = LandInformationSerializer
+
   def get_object(self,pk):
     try:
       return LandInformation.objects.get(id=pk)
@@ -128,7 +137,9 @@ class LandInfoDetailView(APIView):
     landDetails.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
-class LandOwnerInformationView(APIView):
+class LandOwnerInformationView(generics.GenericAPIView):
+  serializer_class = LandOwnerSerializer
+
   def get(self,request,format=None):
     landOwners = LandOwner.objects.all()
     serializer = LandOwnerSerializer(landOwners, many=True)
@@ -142,6 +153,8 @@ class LandOwnerInformationView(APIView):
     return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class LandOwnerDetailInfoView(APIView):
+  serializer_class = LandOwnerSerializer
+
   def get_object(self,pk):
     try:
       return LandOwner.objects.get(id=pk)
