@@ -34,6 +34,7 @@ python3 manage.py runserver
  ## Structure
  | Endpoint | HTTP Method   | CRUD Method  | Result |
 | :---:   | :---: | :---: |:---: |
+| `swagger/` | GET   | GET  |Documentation |
 | `register/` | POST   | CREATE  |Register a user |
 | `login/` | POST  | POST |Login a user |
 | `user/` | GET  | GET  |Get all users  |
